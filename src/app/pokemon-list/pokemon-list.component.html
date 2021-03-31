@@ -1,0 +1,5 @@
+<ul class="list">
+    <button (click)="togglePictures()">Toggle pictures</button>
+    <br>
+    <app-pokemon-list-item [pokemon]="item" *ngFor="let item of pokemon" [pictureDisplayed]="picturesDisplayed"></app-pokemon-list-item>
+</ul>

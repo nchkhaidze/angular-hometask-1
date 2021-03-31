@@ -1,0 +1,14 @@
+.list-item {
+    font-weight: bold; 
+    text-align: center;
+    border: 1px solid black;
+    margin: 10px;
+
+    &__image {
+        width: 200px;
+    }
+}
+
+.highlighted {
+    border: 1px solid red;
+}
