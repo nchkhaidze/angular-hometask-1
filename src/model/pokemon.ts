@@ -1,5 +1,6 @@
 export default interface Pokemon {
-    id: number;
+    id: string;
     name: string;
     damage: number;
+    caught: boolean;
 }

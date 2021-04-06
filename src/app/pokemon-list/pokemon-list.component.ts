@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Pokemon from "../../model/pokemon";
 
 @Component({
   selector: 'app-pokemon-list',
@@ -6,31 +7,36 @@ import { Component } from '@angular/core';
   styleUrls: ['./pokemon-list.component.scss']
 })
 export class PokemonListComponent {
-    pokemon = [
+    pokemon: Pokemon[] = [
         {
             "name": "bulbasaur",
-            "id": 1,
+            "id": "1",
             damage: 228,
+            caught: false,
           },
           {
             "name": "ivysaur",
-            "id": 2,
-            damage: 10
+            "id": "2",
+            damage: 10,
+            caught: false,
           },
           {
             "name": "venusaur",
-            "id": 3,
+            "id": "3",
             damage: 70,
+            caught: false,
           },
           {
             "name": "charmander",
-            "id": 4,
-            damage: 3
+            "id": "4",
+            damage: 3,
+            caught: false,
           },
           {
             "name": "charmeleon",
-            "id": 5,
-            damage: 49
+            "id": "5",
+            damage: 49,
+            caught: false,
           }
     ]
 
@@ -38,5 +44,14 @@ export class PokemonListComponent {
 
     togglePictures() {
         this.picturesDisplayed = !this.picturesDisplayed;
+    }
+
+    toggleCaught(id: string) {
+        const pokemon = this.pokemon.find(p => p.id === id);
+        if (!pokemon) {
+            return;
+        }
+        pokemon.caught = !pokemon.caught;
+        console.log(pokemon);
     }
 }

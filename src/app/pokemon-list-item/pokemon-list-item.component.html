@@ -1,8 +1,11 @@
 <li class="list-item" [ngClass]="{highlighted: (pokemon.damage >= 50)}">
     <div class="list-item__name">{{pokemon.name}}</div>
-    <div class="list-item__damage">{{pokemon.damage}}</div>
-    <img class="list-item__image" *ngIf="showPicture"
+    <div class="list-item__damage">Damage: {{pokemon.damage}}</div>
+    <img class="list-item__image" *ngIf="pictureDisplayed"
         src="https://raw.githubusercontent.com/js-training-dec-2019/final-project/master/pokemons/{{pokemon.id}}.png" 
         alt="pokemon"
     >
+    <div>
+        <button (click)="toggleCaught()">{{pokemon.caught ? "Release" : "Catch"}}</button>
+    </div>
 </li>

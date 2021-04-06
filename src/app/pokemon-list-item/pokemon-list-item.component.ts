@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import Pokemon from "../../model/pokemon"
 
 @Component({
@@ -9,13 +9,11 @@ import Pokemon from "../../model/pokemon"
 export class PokemonListItemComponent {
 
     @Input() pokemon: Pokemon;
+    @Input() pictureDisplayed: boolean;
 
-    private _pictureDisplayed: boolean;
-    @Input() set pictureDisplayed(value: boolean) {
-        this._pictureDisplayed = value;
-        console.log(this._pictureDisplayed)
-    }
-    get showPicture() {
-        return this._pictureDisplayed;
+    @Output() caughtEvent = new EventEmitter();
+
+    toggleCaught() {
+        this.caughtEvent.emit(this.pokemon.id);
     }
 }
