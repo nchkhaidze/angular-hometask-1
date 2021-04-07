@@ -1,2 +1,15 @@
-<app-pokemon-list></app-pokemon-list>
+<div class="wrapper">
+    <input type="text"
+       placeholder="Pick one"
+       aria-label="Number"
+       matInput
+       [formControl]="myControl"
+       [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let tag of tags" [value]="tag">
+          {{tag}}
+        </mat-option>
+    </mat-autocomplete>
+    <app-pokemon-list></app-pokemon-list>
+</div>
 
