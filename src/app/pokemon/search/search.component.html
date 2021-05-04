@@ -1,0 +1,20 @@
+<div class="search-form">
+    <!-- <input type="text" [(ngModel)]="searchValue" (keyup)="searchHandler()" placeholder="Search Pokemon"> -->
+    <form 
+    [formGroup]="tagForm">
+        <input type="text"
+        placeholder="Search pokemons"
+        aria-label="Number"
+        matInput
+        formControlName="tag"
+        [matAutocomplete]="auto"
+        class="search-input"
+        >
+        <small *ngIf="tagForm.get('tag')?.invalid" class="red"> At least 3 characters are required</small>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let tag of displayedTags | async" [value]="tag">
+            {{tag}}
+            </mat-option>
+        </mat-autocomplete>
+    </form>
+</div>

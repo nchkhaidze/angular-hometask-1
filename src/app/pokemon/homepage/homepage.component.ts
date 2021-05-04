@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-homepage',
@@ -7,28 +6,5 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent {
-    tags = [
-        'Angular',
-        'AngularJS',
-        'Angular Material',
-        'React',
-        'Redux',
-        'Vue',
-        'JavaScript',
-        'TypeScript',
-        'RxJS',
-        'HTML',
-        'HTML5',
-        'SASS',
-        'SCSS',
-        'Node.js',
-        'HTTP',
-        'HTTPS',
-        'HTTP/2',
-        'Git',
-        'GitHub',
-        'GitLab',
-    ];
-
-    myControl = new FormControl();
+    
 }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import Pokemon from "../../model/pokemon"
+import Pokemon from "../../../model/pokemon"
 
 @Component({
   selector: 'app-pokemon-list-item',

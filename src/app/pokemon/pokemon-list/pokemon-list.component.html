@@ -1,9 +1,10 @@
 <ul class="list">
+    <app-search (search)="onSearch($event)"></app-search>
     <button (click)="togglePictures()">Toggle pictures</button>
     <br>
     <app-pokemon-list-item 
         [pokemon]="item" 
-        *ngFor="let item of pokemon" 
+        *ngFor="let item of pokemons" 
         [pictureDisplayed]="picturesDisplayed"
         (caughtEvent)="toggleCaught($event)"
         >
