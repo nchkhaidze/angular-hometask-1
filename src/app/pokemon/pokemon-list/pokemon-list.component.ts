@@ -44,10 +44,6 @@ export class PokemonListComponent implements OnInit {
             }))
     }
 
-    onSearch(searchValue: string) {
-        console.log(searchValue);
-    }
-
     onChangePage(pageOfItems: Pokemon[]) {
         this.pageOfItems = pageOfItems;
     }

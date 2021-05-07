@@ -3,4 +3,5 @@ export default interface Pokemon {
     name: string;
     damage: number;
     caught: boolean;
+    tags?: string[];
 }

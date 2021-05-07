@@ -8,9 +8,13 @@ import { SearchComponent } from './search/search.component'
 import {RouterModule} from '@angular/router';
 import { PokemonFullCardComponent } from './pokemon-full-card/pokemon-full-card.component';
 import {JwPaginationModule} from 'jw-angular-pagination';
+import { ManagePokemonComponent } from './manage-pokemon/manage-pokemon.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
-  declarations: [PokemonListComponent, PokemonListItemComponent, SearchComponent, PokemonFullCardComponent],
+  declarations: [PokemonListComponent, PokemonListItemComponent, SearchComponent, PokemonFullCardComponent, ManagePokemonComponent],
   imports: [
     CommonModule,
     MatAutocompleteModule,
@@ -18,6 +22,9 @@ import {JwPaginationModule} from 'jw-angular-pagination';
     FormsModule,
     RouterModule,
     JwPaginationModule,
+    MatChipsModule,
+    MatIconModule,
+    MatFormFieldModule
   ],
   exports: []
 })
