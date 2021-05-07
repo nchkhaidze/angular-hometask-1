@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import Pokemon from "../../../model/pokemon"
 
 @Component({
   selector: 'app-pokemon-list-item',
   templateUrl: './pokemon-list-item.component.html',
-  styleUrls: ['./pokemon-list-item.component.scss']
+  styleUrls: ['./pokemon-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PokemonListItemComponent {
 

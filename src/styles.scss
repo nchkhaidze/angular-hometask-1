@@ -2,3 +2,16 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pagination {
+    margin: 0 auto;
+    width: 70%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px 20px 10px;
+    
+    a {
+        cursor: pointer;
+    }
+ }

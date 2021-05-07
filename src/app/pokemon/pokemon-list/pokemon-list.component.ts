@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import Pokemon from "../../../model/pokemon";
 import {PokemonsService} from "../../services/pokemons/pokemons.service";
 import { Observable, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -9,14 +10,21 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./pokemon-list.component.scss']
 })
 export class PokemonListComponent implements OnInit {
-    constructor(private pokemonsService: PokemonsService) {}
+    constructor(private pokemonsService: PokemonsService, private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
-        this.pokemons = this.pokemonsService.getPokemons();
+        if (this.activatedRoute.routeConfig?.path === "caught") {
+            this.pokemonsService.getCaughtPokemons()
+                .subscribe(pokemons => this.pokemons = pokemons)
+        } else {
+            this.pokemonsService.getAllPokemons()
+                .subscribe(pokemons => this.pokemons = pokemons);
+        }
     }
 
     pokemons: Pokemon[];
-
+    pageOfItems: Pokemon[];
+    currentPage: number = 1; 
     picturesDisplayed: boolean = true;
 
     togglePictures() {
@@ -28,10 +36,19 @@ export class PokemonListComponent implements OnInit {
         if (!pokemon) {
             return;
         }
-        pokemon.caught = !pokemon.caught;
+        this.pokemonsService.toggleCaught(pokemon)
+            .subscribe(() => this.pageOfItems.forEach((pokemon, index) => {
+                if (pokemon.id === id) {
+                    this.pageOfItems[index] = {...this.pageOfItems[index], caught: !this.pageOfItems[index].caught};
+                } 
+            }))
     }
 
     onSearch(searchValue: string) {
         console.log(searchValue);
+    }
+
+    onChangePage(pageOfItems: Pokemon[]) {
+        this.pageOfItems = pageOfItems;
     }
 }

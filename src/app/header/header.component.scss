@@ -1,0 +1,21 @@
+.header {
+    padding: 10px;
+    border: 1px solid black;
+
+    ul {
+        display: flex;
+        justify-content: space-around;
+        list-style: none;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .active {
+            color: rgb(87, 109, 180);
+            cursor: default;
+        }
+    }
+}
+

@@ -1,44 +1,37 @@
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import Pokemon from "../../../model/pokemon";
+import { map } from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PokemonsService {
 
-    constructor() { }
+    constructor(private http: HttpClient) {}
 
-    getPokemons() {
-        return [
-            {
-                "name": "bulbasaur",
-                "id": "1",
-                damage: 228,
-                caught: false,
-            },
-            {
-                "name": "ivysaur",
-                "id": "2",
-                damage: 10,
-                caught: false,
-            },
-            {
-                "name": "venusaur",
-                "id": "3",
-                damage: 70,
-                caught: false,
-            },
-            {
-                "name": "charmander",
-                "id": "4",
-                damage: 3,
-                caught: false,
-            },
-            {
-                "name": "charmeleon",
-                "id": "5",
-                damage: 49,
-                caught: false,
-            }
-        ]
+    private url: string = "http://localhost:3030/pokemons/";
+    private pokemons: Pokemon[];
+
+    getAllPokemons(): Observable<Pokemon[]> {
+        // const params = new HttpParams().append('_page', page);
+        // return this.http.get<Pokemon[]>(this.url.slice(0, this.url.length - 1), {params});
+        return this.http.get<Pokemon[]>(this.url);
+    }
+
+    getCaughtPokemons(): Observable<Pokemon[]> {
+        return this.http.get<Pokemon[]>(this.url)
+            .pipe(
+                map(pokemons => pokemons.filter(pokemon => pokemon.caught))
+            );
+    }
+
+    getPokemon(id: string) {
+        return this.http.get<Pokemon>(this.url + id);
+    }
+
+    toggleCaught(pokemon: Pokemon) {
+        return this.http.put<Pokemon>(this.url + pokemon.id, {...pokemon, caught: !pokemon.caught})
     }
 }

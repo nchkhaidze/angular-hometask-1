@@ -4,9 +4,15 @@
     <br>
     <app-pokemon-list-item 
         [pokemon]="item" 
-        *ngFor="let item of pokemons" 
+        *ngFor="let item of pageOfItems" 
         [pictureDisplayed]="picturesDisplayed"
         (caughtEvent)="toggleCaught($event)"
         >
     </app-pokemon-list-item>
 </ul>
+<jw-pagination 
+    [items]="pokemons" 
+    (changePage)="onChangePage($event)" 
+    [initialPage]="1" 
+    >
+</jw-pagination>
