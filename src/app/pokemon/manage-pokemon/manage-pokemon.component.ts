@@ -19,7 +19,8 @@ export class ManagePokemonComponent implements OnInit {
   pokemonForm = this.formBuilder.group({
     id: ["", [Validators.required, Validators.minLength(6)]],
     name: ["", [Validators.required, Validators.minLength(4)]],
-    tags: [[], Validators.minLength(2)],
+    damage: ["", [Validators.required, Validators.min(1)]],
+    tags: [[]],
   })
 
   ngOnInit(): void {
