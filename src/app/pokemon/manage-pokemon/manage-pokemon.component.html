@@ -1,11 +1,30 @@
-<form class="manage-form">
+<form class="manage-form" [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-        <input type="text" placeholder="Enter id">
+        <input type="text" placeholder="Enter id" formControlName="id">
+        <div>
+            <small class="warning" *ngIf="!pokemonForm.controls['id'].valid && pokemonForm.controls['id']?.touched">
+                Id should be at least 6 characters long
+            </small>
+        </div>
     </div>
     <div class="form-group">
-        <input type="text" placeholder="Enter name">
+        <input type="text" placeholder="Enter name" formControlName="name">
+        <div>
+            <small class="warning" *ngIf="!pokemonForm.controls['name'].valid && pokemonForm.controls['name']?.touched">
+                Name should be at least 4 characters long
+            </small>
+        </div>
     </div>
+    <!-- <div class="form-group">
+        <input type="text" placeholder="Enter damage" formControlName="damage">
+        <div>
+            <small class="warning" *ngIf="!pokemonForm.controls['name'].valid && pokemonForm.controls['name']?.touched">
+                Name should be at least 4 characters long
+            </small>
+        </div>
+    </div> -->
     <div class="form-group">
-        <app-search (search)="onSearch($event)"></app-search>
+        <app-search (tagsChange)="onTagsChange($event)"></app-search>
     </div>
+    <div class="form-group"><button type="submit" [disabled]="!pokemonForm.valid">Add pokemon</button></div>
 </form>

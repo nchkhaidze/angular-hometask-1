@@ -270,7 +270,8 @@
     {
       "name": "dugtrio",
       "id": 51,
-      "damage": 38
+      "damage": 38,
+      "caught": true
     },
     {
       "name": "meowth",
@@ -4772,6 +4773,32 @@
       "name": "magearna-original",
       "id": 10147,
       "damage": 21
+    },
+    {
+      "id": "123123123",
+      "name": "Pocket Monster",
+      "tags": [
+        "Angular",
+        "React"
+      ]
+    },
+    {
+      "id": "a1231231238888",
+      "name": "AVVVAVAF",
+      "tags": [
+        "Redux",
+        "Angular Material"
+      ],
+      "caught": true
+    },
+    {
+      "id": "39454359345",
+      "name": "Mima",
+      "tags": [
+        "Angular",
+        "Angular"
+      ],
+      "caught": true
     }
   ]
 }

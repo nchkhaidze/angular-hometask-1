@@ -1,9 +1,9 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes'
-import {MatChipInputEvent} from '@angular/material/chips';
+import {MatChipInputEvent, MatChipList, MatChipListChange, MatChipSelectionChange} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 @Component({
@@ -16,10 +16,11 @@ export class SearchComponent implements OnInit {
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
-    tagForm: FormGroup;
+    tagControl = new FormControl();
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-    @Output() search: EventEmitter<string> = new EventEmitter<string>();
-    tags = ['Angular'];
+    @ViewChild('chipList') chipList: ElementRef<MatChipList>;
+    @Output() tagsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+    tags: string[] = [];
     allTags = [
         'Angular',
         'AngularJS',
@@ -44,16 +45,11 @@ export class SearchComponent implements OnInit {
     ];
     displayedTags: Observable<string[]>;
 
-    constructor(private formBuilder: FormBuilder) {
-        this.tagForm = this.formBuilder.group({
-            tag: [ "", Validators.minLength(3) ],
-        })
-
-        this.displayedTags = this.tagForm.get("tag")!.valueChanges.pipe(
+    constructor() {
+        this.displayedTags = this.tagControl.valueChanges.pipe(
             startWith(null),
             map((tag: string | null) => tag ? this._filter(tag) : this.allTags.slice()),
-            tap(value => console.log(value)),
-        )
+        );
     }
     
     ngOnInit() {
@@ -65,13 +61,14 @@ export class SearchComponent implements OnInit {
     
         if ((value || '').trim()) {
           this.tags.push(value.trim());
+          this.tagsChange.emit(this.tags);
         }
     
         if (input) {
           input.value = '';
         }
     
-        this.tagForm.get("tag")?.setValue(null);
+        this.tagControl.setValue(null);
       }
 
     remove(tag: string): void {
@@ -79,13 +76,15 @@ export class SearchComponent implements OnInit {
     
         if (index >= 0) {
           this.tags.splice(index, 1);
+          this.tagsChange.emit(this.tags);
         }
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
         this.tags.push(event.option.viewValue);
+        this.tagsChange.emit(this.tags);
         this.tagInput.nativeElement.value = '';
-        this.tagForm.get("tag")?.setValue(null);
+        this.tagControl.setValue(null);
     }
 
     private _filter(value: string) {

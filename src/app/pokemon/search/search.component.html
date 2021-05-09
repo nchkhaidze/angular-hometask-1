@@ -1,6 +1,6 @@
 <mat-form-field class="tag-list">
     <form 
-    [formGroup]="tagForm">
+    >
         <mat-chip-list #chipList aria-label="Tag selection">
         <mat-chip
             *ngFor="let tag of tags"
@@ -13,7 +13,7 @@
         <input
             placeholder="New tag..."
             #tagInput
-            formControlName="tag"
+            [formControl]="tagControl"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"

@@ -34,4 +34,8 @@ export class PokemonsService {
     toggleCaught(pokemon: Pokemon) {
         return this.http.put<Pokemon>(this.url + pokemon.id, {...pokemon, caught: !pokemon.caught})
     }
+
+    addPokemon(pokemon: Pokemon) {
+        return this.http.post<Pokemon>(this.url, pokemon);
+    } 
 }
