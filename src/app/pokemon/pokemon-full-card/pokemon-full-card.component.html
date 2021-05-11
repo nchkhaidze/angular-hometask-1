@@ -2,14 +2,19 @@
     <p *ngIf="!pokemon">Wait...</p>
     <div *ngIf="pokemon" class="card" [style.border]="pokemon.damage > 50 ? '1px solid red' : '1px solid black'">
         <h2>{{pokemon.name | titlecase}}</h2>
-        <img 
+        <img *ngIf="pokemon"
             class="image"
-            src="https://raw.githubusercontent.com/js-training-dec-2019/final-project/master/pokemons/{{pokemon.id}}.png" 
+            src="{{imageUrl}}"
             alt=""
         >
         <p>{{"Damage: " + pokemon.damage}}</p>
         <p>{{pokemon.caught ? "Caught" : "Not Caught"}}</p>
-        <div><button (click)="toggleCaught()" class="catch-button">{{pokemon.caught ? "Release" : "Catch"}}</button></div>
+        <div><button (click)="toggleCaught()" class="button">{{pokemon.caught ? "Release" : "Catch"}}</button></div>
+        <div>
+            <a routerLink="/edit/{{pokemon.id}}">
+                <button class="button">Edit</button>
+            </a>
+        </div>
     </div>
 </div>
 

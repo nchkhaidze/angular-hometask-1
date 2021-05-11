@@ -9,7 +9,8 @@ const routes: Routes = [
     {path: "pokemons", component: PokemonListComponent},
     {path: "caught", component: PokemonListComponent},
     {path: "pokemon/:id", component: PokemonFullCardComponent},
-    {path: "manage", component: ManagePokemonComponent},
+    {path: "add", component: ManagePokemonComponent},
+    {path: "edit/:id", component: ManagePokemonComponent},
     {path: "", component: PokemonListComponent},
     {path: "**", component: PageNotFoundComponent}
 ];

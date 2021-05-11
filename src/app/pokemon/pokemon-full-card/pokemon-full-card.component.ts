@@ -14,11 +14,15 @@ export class PokemonFullCardComponent implements OnInit {
   constructor(private pokemonsService: PokemonsService, private activatedRoute: ActivatedRoute) { }
 
   pokemon: Pokemon;
+  imageUrl: string;
 
   ngOnInit(): void {
     const pokemonId = this.activatedRoute.snapshot.paramMap.get("id");
     this.pokemonsService.getPokemon(pokemonId ?? "")
-        .subscribe(pokemon => this.pokemon = pokemon); 
+        .subscribe(pokemon => {
+            this.pokemon = pokemon;
+            this.imageUrl = this.pokemon.imageUrl ?? `https://raw.githubusercontent.com/js-training-dec-2019/final-project/master/pokemons/${this.pokemon.id}.png`
+        })
   }
 
   toggleCaught() {

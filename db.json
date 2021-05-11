@@ -1,10 +1,12 @@
 {
   "pokemons": [
     {
-      "name": "bulbasaur",
       "id": 1,
-      "damage": 99,
-      "caught": false
+      "name": "bulb",
+      "damage": "80",
+      "tags": [
+        "Angular"
+      ]
     },
     {
       "name": "ivysaur",
@@ -37,10 +39,13 @@
       "caught": false
     },
     {
-      "name": "squirtle",
+      "caught": true,
       "id": 7,
+      "name": "squirtle",
       "damage": 38,
-      "caught": true
+      "tags": [
+        "GitHub"
+      ]
     },
     {
       "name": "wartortle",
@@ -48,15 +53,22 @@
       "damage": 1
     },
     {
-      "name": "blastoise",
+      "caught": true,
       "id": 9,
-      "damage": 53
+      "name": "blasterr",
+      "damage": 53,
+      "tags": [
+        "Angular Material"
+      ]
     },
     {
-      "name": "caterpie",
+      "caught": true,
       "id": 10,
+      "name": "XUYY",
       "damage": 24,
-      "caught": false
+      "tags": [
+        "HTTPS"
+      ]
     },
     {
       "name": "metapod",
@@ -4785,20 +4797,18 @@
     {
       "id": "a1231231238888",
       "name": "AVVVAVAF",
+      "damage": "15",
       "tags": [
-        "Redux",
-        "Angular Material"
-      ],
-      "caught": false
+        "HTTP"
+      ]
     },
     {
       "id": "39454359345",
       "name": "Mima",
+      "damage": "123",
       "tags": [
-        "Angular",
-        "Angular"
-      ],
-      "caught": false
+        "GitHub"
+      ]
     },
     {
       "id": "981293712",
@@ -4818,14 +4828,6 @@
         "Redux",
         "React",
         "qasdd"
-      ]
-    },
-    {
-      "id": "3248923648235",
-      "name": "Zibbiguga",
-      "damage": "25",
-      "tags": [
-        "Redux"
       ],
       "caught": true
     }

@@ -1,5 +1,7 @@
 <form class="manage-form" [formGroup]="pokemonForm" (ngSubmit)="onSubmit()">
+    <div class="form-group"><h1>{{editMode ? "Edit pokemon" : "Add pokemon"}}</h1></div>
     <div class="form-group">
+        Id: 
         <input type="text" placeholder="Enter id" formControlName="id">
         <div>
             <small class="warning" *ngIf="!pokemonForm.controls['id'].valid && pokemonForm.controls['id']?.touched">
@@ -8,6 +10,7 @@
         </div>
     </div>
     <div class="form-group">
+        Name:
         <input type="text" placeholder="Enter name" formControlName="name">
         <div>
             <small class="warning" *ngIf="!pokemonForm.controls['name'].valid && pokemonForm.controls['name']?.touched">
@@ -16,6 +19,7 @@
         </div>
     </div>
     <div class="form-group">
+        Damage:
         <input type="text" placeholder="Enter damage" formControlName="damage">
         <div>
             <small class="warning" *ngIf="!pokemonForm.controls['damage'].valid && pokemonForm.controls['damage']?.touched">
@@ -23,8 +27,10 @@
             </small>
         </div>
     </div>
-    <div class="form-group">
-        <app-search (tagsChange)="onTagsChange($event)"></app-search>
+    <div class="form-group" *ngIf="pokemon">
+        <app-search (tagsChange)="onTagsChange($event)" [existingTags]="pokemon.tags"></app-search>
     </div>
-    <div class="form-group"><button type="submit" [disabled]="!pokemonForm.valid">Add pokemon</button></div>
+    <div class="form-group">
+        <button type="submit" [disabled]="!pokemonForm.valid">{{editMode ? "Update pokemon" : "Add pokemon"}}</button>
+    </div>
 </form>

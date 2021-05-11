@@ -20,7 +20,7 @@
             (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let tag of displayedTags | async" [value]="tag">
+        <mat-option *ngFor="let tag of autocompleteTags | async" [value]="tag">
             {{tag}}
         </mat-option>
         </mat-autocomplete>
@@ -41,7 +41,7 @@
         >
         <small *ngIf="tagForm.get('tag')?.invalid" class="red"> At least 3 characters are required</small>
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let tag of displayedTags | async" [value]="tag">
+            <mat-option *ngFor="let tag of autocompleteTags | async" [value]="tag">
             {{tag}}
             </mat-option>
         </mat-autocomplete>

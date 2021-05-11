@@ -4,4 +4,5 @@ export default interface Pokemon {
     damage: number;
     caught: boolean;
     tags?: string[];
+    imageUrl?: string;
 }

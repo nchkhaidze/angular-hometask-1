@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { debounceTime, map, startWith, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -18,8 +18,8 @@ export class SearchComponent implements OnInit {
     separatorKeysCodes: number[] = [ENTER, COMMA];
     tagControl = new FormControl();
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-    @ViewChild('chipList') chipList: ElementRef<MatChipList>;
     @Output() tagsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Input() existingTags: string[] | undefined;
     tags: string[] = [];
     allTags = [
         'Angular',
@@ -43,16 +43,19 @@ export class SearchComponent implements OnInit {
         'GitHub',
         'GitLab',
     ];
-    displayedTags: Observable<string[]>;
+    autocompleteTags: Observable<string[]>;
 
     constructor() {
-        this.displayedTags = this.tagControl.valueChanges.pipe(
+        this.autocompleteTags = this.tagControl.valueChanges.pipe(
             startWith(null),
             map((tag: string | null) => tag ? this._filter(tag) : this.allTags.slice()),
         );
     }
     
     ngOnInit() {
+        if (this.existingTags) {
+            this.tags = this.existingTags;
+        }
     }
 
     add(event: MatChipInputEvent): void {
