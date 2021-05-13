@@ -10,7 +10,7 @@
             {{tag}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-        <input
+        <input 
             placeholder="Enter tags..."
             #tagInput
             [formControl]="tagControl"
@@ -26,24 +26,3 @@
         </mat-autocomplete>
     </form>
 </mat-form-field>
-
-<!-- <div class="search-form">
-    <form 
-    [formGroup]="tagForm">
-        <input type="text"
-        placeholder="Enter tags"
-        aria-label="Number"
-        matInput
-        formControlName="tag"
-        [matAutocomplete]="auto"
-        class="search-input"
-        multiple
-        >
-        <small *ngIf="tagForm.get('tag')?.invalid" class="red"> At least 3 characters are required</small>
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let tag of autocompleteTags | async" [value]="tag">
-            {{tag}}
-            </mat-option>
-        </mat-autocomplete>
-    </form>
-</div> -->

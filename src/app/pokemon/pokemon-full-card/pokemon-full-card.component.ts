@@ -1,37 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {PokemonsService} from 'src/app/services/pokemons/pokemons.service';
 import Pokemon from "../../../model/pokemon"
 
 @Component({
-  selector: 'app-pokemon-full-card',
-  templateUrl: './pokemon-full-card.component.html',
-  styleUrls: ['./pokemon-full-card.component.scss']
+    selector: 'app-pokemon-full-card',
+    templateUrl: './pokemon-full-card.component.html',
+    styleUrls: [ './pokemon-full-card.component.scss' ]
 })
-export class PokemonFullCardComponent implements OnInit {
+export class PokemonFullCardComponent implements OnInit, OnDestroy {
 
-  constructor(private pokemonsService: PokemonsService, private activatedRoute: ActivatedRoute) { }
+    constructor(private pokemonsService: PokemonsService, private activatedRoute: ActivatedRoute) { }
 
-  pokemon: Pokemon;
-  imageUrl: string;
+    pokemon: Pokemon;
+    imageUrl: string;
+    subscription: Subscription = new Subscription();
 
-  ngOnInit(): void {
-    const pokemonId = this.activatedRoute.snapshot.paramMap.get("id");
-    this.pokemonsService.getPokemon(pokemonId ?? "")
-        .subscribe(pokemon => {
-            this.pokemon = pokemon;
-            this.imageUrl = this.pokemon.imageUrl ?? `https://raw.githubusercontent.com/js-training-dec-2019/final-project/master/pokemons/${this.pokemon.id}.png`
-        })
-  }
+    ngOnInit(): void {
+        const pokemonId = this.activatedRoute.snapshot.paramMap.get("id");
+        this.subscription.add(this.pokemonsService.getPokemon(pokemonId ?? "")
+            .subscribe(pokemon => {
+                this.pokemon = pokemon;
+                this.imageUrl = this.pokemon.imageUrl ?? `https://raw.githubusercontent.com/js-training-dec-2019/final-project/master/pokemons/${this.pokemon.id}.png`
+            })
+        )
+    }
 
-  toggleCaught() {
-      if (!this.pokemon) {
-          return;
-      }
+    toggleCaught() {
+        if (!this.pokemon) {
+            return;
+        }
 
-      this.pokemonsService.toggleCaught(this.pokemon)
-        .subscribe(() => this.pokemon.caught = !this.pokemon.caught);
-  }
+        this.subscription.add(this.pokemonsService.toggleCaught(this.pokemon)
+            .subscribe(() => this.pokemon.caught = !this.pokemon.caught)
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
 }

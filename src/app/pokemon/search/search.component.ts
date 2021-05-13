@@ -1,25 +1,30 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { debounceTime, map, startWith, tap } from 'rxjs/operators';
+import {Component, ElementRef, forwardRef, OnInit, ViewChild} from '@angular/core';
+import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import {COMMA, ENTER} from '@angular/cdk/keycodes'
-import {MatChipInputEvent, MatChipList, MatChipListChange, MatChipSelectionChange} from '@angular/material/chips';
+import {MatChipInputEvent} from '@angular/material/chips';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.component.html',
-    styleUrls: [ './search.component.scss' ]
+    styleUrls: [ './search.component.scss' ],
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => SearchComponent),
+        multi: true,
+    },
+]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, ControlValueAccessor {
     visible = true;
     selectable = true;
     removable = true;
     separatorKeysCodes: number[] = [ENTER, COMMA];
     tagControl = new FormControl();
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
-    @Output() tagsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-    @Input() existingTags: string[] | undefined;
+    value: string;
     tags: string[] = [];
     allTags = [
         'Angular',
@@ -52,11 +57,25 @@ export class SearchComponent implements OnInit {
         );
     }
     
-    ngOnInit() {
-        if (this.existingTags) {
-            this.tags = this.existingTags;
+    writeValue(value: string[]) {
+        if (value !== undefined) {
+            this.tags = value;
         }
     }
+
+    onChange = (tags: string[]) => {};
+
+    onTouched = () => {};
+
+    registerOnChange(fn: any) {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: any) {
+        this.onTouched = fn;
+    }
+
+    ngOnInit() {}
 
     add(event: MatChipInputEvent): void {
         const input = event.input;
@@ -64,7 +83,7 @@ export class SearchComponent implements OnInit {
     
         if ((value || '').trim()) {
           this.tags.push(value.trim());
-          this.tagsChange.emit(this.tags);
+          this.onChange(this.tags);
         }
     
         if (input) {
@@ -79,13 +98,14 @@ export class SearchComponent implements OnInit {
     
         if (index >= 0) {
           this.tags.splice(index, 1);
-          this.tagsChange.emit(this.tags);
+          this.onChange(this.tags);
         }
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
+        this.onTouched();
         this.tags.push(event.option.viewValue);
-        this.tagsChange.emit(this.tags);
+        this.onChange(this.tags);
         this.tagInput.nativeElement.value = '';
         this.tagControl.setValue(null);
     }

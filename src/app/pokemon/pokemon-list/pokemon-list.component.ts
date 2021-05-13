@@ -1,25 +1,26 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import Pokemon from "../../../model/pokemon";
 import {PokemonsService} from "../../services/pokemons/pokemons.service";
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, Subscription, pipe } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss']
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent implements OnInit, OnDestroy {
     constructor(private pokemonsService: PokemonsService, private activatedRoute: ActivatedRoute) {}
 
+    private unsubscribe$ = new Subject<void>();
+
     ngOnInit() {
-        if (this.activatedRoute.routeConfig?.path === "caught") {
-            this.pokemonsService.getCaughtPokemons()
-                .subscribe(pokemons => this.pokemons = pokemons)
-        } else {
-            this.pokemonsService.getAllPokemons()
-                .subscribe(pokemons => this.pokemons = pokemons);
-        }
+        (this.activatedRoute.routeConfig?.path === "caught" 
+        ? this.pokemonsService.getCaughtPokemons() 
+        : this.pokemonsService.getAllPokemons())
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(pokemons => this.pokemons = pokemons);
     }
 
     pokemons: Pokemon[];
@@ -36,7 +37,8 @@ export class PokemonListComponent implements OnInit {
         if (!pokemon) {
             return;
         }
-        this.pokemonsService.toggleCaught(pokemon)
+       this.pokemonsService.toggleCaught(pokemon)
+            .pipe(takeUntil(this.unsubscribe$))
             .subscribe(() => this.pageOfItems.forEach((pokemon, index) => {
                 if (pokemon.id === id) {
                     this.pageOfItems[index] = {...this.pageOfItems[index], caught: !this.pageOfItems[index].caught};
@@ -47,4 +49,10 @@ export class PokemonListComponent implements OnInit {
     onChangePage(pageOfItems: Pokemon[]) {
         this.pageOfItems = pageOfItems;
     }
+
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
 }
+

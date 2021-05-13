@@ -28,7 +28,12 @@
         </div>
     </div>
     <div class="form-group" *ngIf="pokemon">
-        <app-search (tagsChange)="onTagsChange($event)" [existingTags]="pokemon.tags"></app-search>
+        <app-search formControlName="tags"></app-search>
+        <div>
+            <small class="warning" *ngIf="!pokemonForm.controls['tags'].valid && pokemonForm.controls['tags']?.touched">
+                There should be either 0 or more than 1 tag
+            </small>
+        </div>
     </div>
     <div class="form-group">
         <button type="submit" [disabled]="!pokemonForm.valid">{{editMode ? "Update pokemon" : "Add pokemon"}}</button>
